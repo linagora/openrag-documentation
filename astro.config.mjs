@@ -14,8 +14,8 @@ export default defineConfig({
                     slug: 'index'
                 },
                 {
-                    label: 'Starter Blocks',
-                    autogenerate: { directory: 'starter_blocks' }
+                    label: 'Getting Started',
+                    autogenerate: { directory: 'getting_started' }
                 },
                 {
                     label: 'Installation',
