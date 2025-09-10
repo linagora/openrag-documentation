@@ -1,5 +1,5 @@
 ---
-title: IndexerUI
+title: Indexer UI
 ---
 
 ## Configuring the Indexer UI
