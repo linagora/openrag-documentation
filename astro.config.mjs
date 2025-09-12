@@ -26,10 +26,6 @@ export default defineConfig({
                     autogenerate: { directory: 'documentation' }
                 },
                 {
-                    label: 'Docs',
-                    autogenerate: { directory: 'documentation_old' }
-                },
-                {
                     label: 'Support and Contribute',
                     slug: 'support-and-contribute'
                 },
