@@ -12,7 +12,8 @@ This guide explains how to deploy **OpenRAG** across multiple machines using **R
 
 Ensure your `.env` file includes the standard app variables **plus Ray-specific ones** listed below:
 
-```env
+```bash 
+// .env
 # Ray
 # Resources for all files
 RAY_NUM_GPUS=0.1
@@ -44,18 +45,26 @@ UV_CACHE_DIR=/tmp/uv-cache
 
 ✅ Use host IPs instead of Docker service names :
 
-- EMBEDDER_BASE_URL=http://<HOST-IP>:8000/v1  # ✅ instead of http://vllm:8000/v1
-- VDB_HOST=<HOST-IP>                          # ✅ instead of VDB_HOST=milvus
+```diff lang="bash"
+// .env
+- EMBEDDER_BASE_URL=http://vllm:8000/v1
++ EMBEDDER_BASE_URL=http://<HOST-IP>:8000/v1  # ✅ instead of http://vllm:8000/v1
 
+- VDB_HOST=milvus
++ VDB_HOST=<HOST-IP>                          # ✅ instead of VDB_HOST=milvus
+```
 
-> 🧠 **Tips**  
->
-> - `RAY_NUM_GPUS` defines **per-actor resource requirements**. Ray will not start a task until these resources are available on one of the nodes.  
->   For example, if one indexation consumes ~1GB of VRAM and your GPU has 4GB, setting `RAY_NUM_GPUS=0.25` allows you to run **4 indexers per node**. In a 2-node cluster, that means up to **8 concurrent indexation tasks**.  
->
-> - `RAY_POOL_SIZE` defines the number of worker actors that will be created to handle indexation tasks. It acts like a **maximum concurrency limit**.  
->   Using the previous example, you can set `POOL_SIZE=8` to fully utilize your cluster capacity.  
->   ⚠️ If other GPU-intensive services are running on your nodes (e.g. vLLM, the RAG API), make sure to **reserve enough GPU memory** for them and subtract that from your total when calculating the safe pool size.
+:::tip[🧠 **Tips**]
+- `RAY_NUM_GPUS` defines **per-actor resource requirements**. Ray will not start a task until these resources are available on one of the nodes.  
+For example, if one indexation consumes ~1GB of VRAM and your GPU has 4GB, setting `RAY_NUM_GPUS=0.25` allows you to run **4 indexers per node**. In a 2-node cluster, that means up to **8 concurrent indexation tasks**.  
+
+- `RAY_POOL_SIZE` defines the number of worker actors that will be created to handle indexation tasks. It acts like a **maximum concurrency limit**.  
+Using the previous example, you can set `POOL_SIZE=8` to fully utilize your cluster capacity.
+:::
+
+:::caution
+If other GPU-intensive services are running on your nodes (e.g. vLLM, the RAG API), make sure to **reserve enough GPU memory** for them and subtract that from your total when calculating the safe pool size.
+:::
 
 ---
 
@@ -64,7 +73,7 @@ UV_CACHE_DIR=/tmp/uv-cache
 All nodes need to access shared configuration and data folders.  
 We recommend using **GlusterFS** for this.
 
-➡ Follow the [GlusterFS Setup Guide](./setup_glusterfs.md) to configure:
+➡ Follow the [GlusterFS Setup Guide](/documentation/setup_glusterfs/) to configure:
 
 - Shared access to:
   - `.env`
@@ -79,6 +88,7 @@ We recommend using **GlusterFS** for this.
 First, prepare your `cluster.yaml` file. Here's an example for a **local provider**:
 
 ```yaml
+// cluster.yaml
 cluster_name: rag-cluster
 provider:
   type: local
