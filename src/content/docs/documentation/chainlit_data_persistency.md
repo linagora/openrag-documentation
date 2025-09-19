@@ -18,7 +18,7 @@ To deploy the Chainlit data layer service, add the following variable:
 CHAINLIT_DATALAYER_COMPOSE=extern/chainlit-datalayer/compose.yaml
 ```
 This provides 2 services:
-- a postgres database to store users, feedbacks, chat history, etc
+- a postgres database to store users, feedback, chat history, etc
 - "s3 bucket" emulator to store elements (files attached in the chat). 
 
 :::note
