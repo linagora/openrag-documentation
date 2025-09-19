@@ -21,7 +21,7 @@ Experience intuitive document management through our built-in web interface.
 
 * **Drag-and-drop file upload** with batch processing capabilities
 * **Real-time indexing progress** monitoring and status updates
-* **Admin Dashbord** to monitore RAG components (Indexer, VectorDB, TaskStateManager, etc)
+* **Admin Dashboard** to monitor RAG components (Indexer, VectorDB, TaskStateManager, etc)
 * **Partition management** - organize documents into logical collections
 * **Visual document preview** and metadata inspection
 * **Search and filtering** capabilities for indexed content
